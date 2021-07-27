@@ -6,6 +6,7 @@ public class Movie {
     private int rating;
 
     // EFFECTS: Constructs a Movie
+    // REQUIRES: movieRating is an int, movieName and movieGenre are String
     public Movie(String movieName, String movieGenre, int movieRating) {
         name = movieName;
         genre = movieGenre;

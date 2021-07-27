@@ -23,7 +23,7 @@ public class MovieWatchlist {
             command = input.next();
             command = command.toLowerCase();
 
-            if (command.equals("q")) {
+            if (command.equals("5")) {
                 keepGoing = false;
             } else {
                 processCommand(command);
