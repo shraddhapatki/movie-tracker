@@ -20,6 +20,6 @@ am in need of a film to watch.
 **User Stories**
 
 - As a user, I want to be able to add a movie.
-- As a user, I want to be able to remove a movie.
 - As a user, I want to be able to view all movies.
-- As a user, I want to be able to mark a movie as watched.
+- As a user, I want to be able to mark a movie as watched or unwatched.
+- As a user, I want to be able to view my watched and unwatched movies.
