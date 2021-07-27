@@ -2,8 +2,6 @@ package ui;
 
 import model.*;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class MovieWatchlist {
@@ -98,9 +96,9 @@ public class MovieWatchlist {
         String movieName = input.next();
         System.out.println("\nEnter 1 for watched or 2 for unwatched");
         String status = input.next();
-        if (status == "1") {
+        if (status.equals("1")) {
             movieList.markWatchedMovie(movieName);
-        } else if (status == "2") {
+        } else if (status.equals("2")) {
             movieList.markUnwatchedMovie(movieName);
         }
         System.out.println("\nThe changes have been made");
