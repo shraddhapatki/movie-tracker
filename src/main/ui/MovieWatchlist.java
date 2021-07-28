@@ -4,6 +4,9 @@ import model.*;
 
 import java.util.Scanner;
 
+// Citation: UI Functionality and methods are implemented from Teller App. Link below:
+// https://github.students.cs.ubc.ca/CPSC210/TellerApp
+
 public class MovieWatchlist {
     private MovieList movieList;
     private Scanner input;
