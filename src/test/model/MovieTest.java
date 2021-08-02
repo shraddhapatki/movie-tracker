@@ -27,4 +27,9 @@ public class MovieTest {
     public void testGetRating() {
         assertEquals(9, testMovie.getRating());
     }
+
+    @Test
+    public void testGetMovie() {
+        assertEquals("Big Fish: Fantasy, 9", testMovie.getMovie());
+    }
 }

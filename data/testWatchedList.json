@@ -1,0 +1,25 @@
+{
+    "movies": [
+        {
+            "name": "life of pi",
+            "genre": "adventure",
+            "rating": 8
+        },
+        {
+            "name": "goodfellas",
+            "genre": "drama",
+            "rating": 9
+        }
+    ],
+    "watched movies": [{
+        "name": "life of pi",
+        "genre": "adventure",
+        "rating": 8
+    }],
+    "name": "My Movie List",
+    "unwatched movies": [{
+        "name": "goodfellas",
+        "genre": "drama",
+        "rating": 9
+    }]
+}

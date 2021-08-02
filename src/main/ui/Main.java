@@ -2,8 +2,14 @@ package ui;
 
 import model.Movie;
 
+import java.io.FileNotFoundException;
+
 public class Main {
     public static void main(String[] args) {
-        new MovieWatchlist();
+        try {
+            new MovieWatchlist();
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found");
+        }
     }
 }
