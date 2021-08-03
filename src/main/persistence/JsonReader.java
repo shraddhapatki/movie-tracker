@@ -10,21 +10,26 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.stream.Stream;
 
+// CITATION: received advice and assistance from TA during Nuts' office hours
+
 // Represents a reader that reads movie list from JSON data stored in file
 public class JsonReader {
     private String source;
 
-    // EFFECTS:
+    // EFFECTS: constructs reader to read from source file
     public JsonReader(String source) {
         this.source = source;
     }
 
+    // EFFECTS: reads movielist from file and returns it
+    // throws IOException if an error occurs while reading data
     public MovieList read() throws IOException {
         String jsonData = readFile(source);
         JSONObject jsonObject = new JSONObject(jsonData);
         return parseMovieList(jsonObject);
     }
 
+    // EFFECTS: reads file as a string and returns it
     private String readFile(String source) throws IOException {
         StringBuilder contentBuilder = new StringBuilder();
 
@@ -34,6 +39,7 @@ public class JsonReader {
         return contentBuilder.toString();
     }
 
+    // EFFECTS: parses movielist from JSON object and returns it
     private MovieList parseMovieList(JSONObject jsonObject) {
         String name = jsonObject.getString("name");
         MovieList movieList = new MovieList(name);
@@ -43,6 +49,8 @@ public class JsonReader {
         return movieList;
     }
 
+    // EFFECTS: parses all movies list from JSON object and adds them to movielist
+    // MODIFIES: movieList
     private void addMovies(MovieList movieList, JSONObject jsonObject) {
         JSONArray jsonArray = jsonObject.getJSONArray("movies");
         for (Object json : jsonArray) {
@@ -51,6 +59,8 @@ public class JsonReader {
         }
     }
 
+    // EFFECTS: parses unwatched movies list from JSON object and adds them to movielist
+    // MODIFIES: movieList
     private void addUnwatched(MovieList movieList, JSONObject jsonObject) {
         JSONArray jsonArray = jsonObject.getJSONArray("unwatched movies");
         for (Object json : jsonArray) {
@@ -59,6 +69,8 @@ public class JsonReader {
         }
     }
 
+    // EFFECTS: parses watched movies list from JSON object and adds them to movielist
+    // MODIFIES: movieList
     private void addWatched(MovieList movieList, JSONObject jsonObject) {
         JSONArray jsonArray = jsonObject.getJSONArray("watched movies");
         for (Object json : jsonArray) {
@@ -67,6 +79,8 @@ public class JsonReader {
         }
     }
 
+    // EFFECTS: parses all/watched/unwatched movie from JSON object and adds them to movielist
+    // MODIFIES: movieList
     private void addMovie(MovieList movieList, JSONObject jsonObject, String status) {
         String name = jsonObject.getString("name");
         String genre = jsonObject.getString("genre");

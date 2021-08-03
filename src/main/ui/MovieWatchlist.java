@@ -12,6 +12,7 @@ import java.util.Scanner;
 // Citation: UI Functionality and methods are implemented from Teller App. Link below:
 // https://github.students.cs.ubc.ca/CPSC210/TellerApp
 
+// Represents the movie watchlist application
 public class MovieWatchlist {
     private static final String JSON_STORE = "./data/movielist.json";
     private MovieList movieList;
@@ -28,6 +29,7 @@ public class MovieWatchlist {
         runMovieWatchlist();
     }
 
+    // EFFECTS: processes user input
     // MODIFIES: this
     private void runMovieWatchlist() {
         boolean keepGoing = true;
@@ -79,7 +81,7 @@ public class MovieWatchlist {
         System.out.println("\t7 -> Quit");
     }
 
-    // EFFECTS: adds a movies
+    // EFFECTS: asks user for name, genre and rating of a film and adds to all movies list
     private void addMovie() {
         System.out.println("\nName?");
         input.nextLine();
@@ -93,6 +95,7 @@ public class MovieWatchlist {
         System.out.println("\n New movie has been added to your list");
     }
 
+    // EFFECTS: asks user for name of movie and removes from all lists
     private void deleteMovie() {
         System.out.println("\nName?");
         input.nextLine();
@@ -101,6 +104,7 @@ public class MovieWatchlist {
         System.out.println("\nMovie has been removed from your list");
     }
 
+    // EFFECTS: asks user to select which list to view and returns appropriate movie list
     private void showAll() {
         System.out.println("\nChoose 1 for all movies, 2 for watched movies, 3 for unwatched movies");
         String choice = input.next();
@@ -122,6 +126,8 @@ public class MovieWatchlist {
         }
     }
 
+    // EFFECTS: asks user for movie's name and new status of the movie
+    // MODIFIES: movieList
     private void markStatus() {
         System.out.println("\nWhich movie's status do you want to change?");
         input.nextLine();
@@ -136,6 +142,7 @@ public class MovieWatchlist {
         System.out.println("\nThe changes have been made");
     }
 
+    // EFFECTS: saves movieList to file
     private void saveMovieList() {
         try {
             jsonWriter.open();
@@ -147,6 +154,8 @@ public class MovieWatchlist {
         }
     }
 
+    // EFFECTS: loads movieList from file
+    // MODIFIES: movieList
     private void loadMovieList() {
         try {
             movieList = jsonReader.read();

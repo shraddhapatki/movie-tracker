@@ -65,6 +65,18 @@ public class MovieListTest {
     }
 
     @Test
+    public void testRemoveMovie3() {
+        testMovieList.addAll(testMovie1);
+        testMovieList.addAll(testMovie2);
+        testMovieList.removeMovie("Big Fish");
+        List<Movie> testList = new ArrayList<>();
+        assertEquals(testList, testMovieList.getUnwatchedMovies());
+        assertEquals(testList, testMovieList.getWatchedMovies());
+        testList.add(testMovie2);
+        assertEquals(testList, testMovieList.getAllMovies());
+    }
+
+    @Test
     public void testMarkWatched() {
         testMovieList.addAll(testMovie1);
         testMovieList.addAll(testMovie2);
@@ -82,6 +94,15 @@ public class MovieListTest {
     }
 
     @Test
+    public void testMarkWatched2() {
+        testMovieList.addAll(testMovie1);
+        testMovieList.markWatchedMovie("Big Fish");
+        List<Movie> testList = new ArrayList<>();
+        testList.add(testMovie1);
+        assertEquals(testList, testMovieList.getWatchedMovies());
+    }
+
+    @Test
     public void testMarkUnwatched() {
         testMovieList.addAll(testMovie1);
         testMovieList.addAll(testMovie2);
@@ -94,6 +115,15 @@ public class MovieListTest {
         allMovies.add(testMovie1);
         allMovies.add(testMovie2);
         assertEquals(allMovies, testMovieList.getAllMovies());
+    }
+
+    @Test
+    public void testMarkUnwatched2() {
+        testMovieList.addAll(testMovie1);
+        testMovieList.markUnwatchedMovie("Big Fish");
+        List<Movie> testList = new ArrayList<>();
+        testList.add(testMovie1);
+        assertEquals(testList, testMovieList.getUnwatchedMovies());
     }
 
     @Test
