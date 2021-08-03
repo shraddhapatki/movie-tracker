@@ -7,6 +7,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 
+// Citation: Structure and methods are implemented from JsonSerializationDemo. Link below:
+// https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
+
 // Represents a writer that writes JSON representation of movielist to file
 public class JsonWriter {
     public static final int TAB = 4;

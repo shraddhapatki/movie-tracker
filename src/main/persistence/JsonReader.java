@@ -12,6 +12,10 @@ import java.util.stream.Stream;
 
 // CITATION: received advice and assistance from TA during Nuts' office hours
 
+// Citation: Structure and methods are implemented from JsonSerializationDemo. Link below:
+// https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
+
+
 // Represents a reader that reads movie list from JSON data stored in file
 public class JsonReader {
     private String source;

@@ -7,6 +7,8 @@ import persistence.Writable;
 import java.util.ArrayList;
 import java.util.List;
 
+// CITATION: received advice and assistance from TA during Nuts' office hours
+
 public class MovieList implements Writable {
     private List<Movie> unwatchedMovies;
     private List<Movie> watchedMovies;
