@@ -27,4 +27,4 @@ way to organise this kind of data would be useful.
 - As a user, I want to be able to view my watched and unwatched movies.
 - As a user, I want to be able to mark a movie as watched or unwatched.
 - As a user, I want to be able to save my movie list to file.
-- As a user, I want to be able to load my move list to file.
+- As a user, I want to be able to load my movie list to file.
