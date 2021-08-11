@@ -4,7 +4,7 @@ import model.Movie;
 
 import java.io.FileNotFoundException;
 
-public class Main {
+public class ConsoleUI {
     public static void main(String[] args) {
         try {
             new MovieWatchlist();

@@ -55,7 +55,7 @@ public class JsonReader {
 
     // EFFECTS: parses all movies list from JSON object and adds them to movielist
     // MODIFIES: movieList
-    private void addMovies(MovieList movieList, JSONObject jsonObject) {
+    public void addMovies(MovieList movieList, JSONObject jsonObject) {
         JSONArray jsonArray = jsonObject.getJSONArray("movies");
         for (Object json : jsonArray) {
             JSONObject nextMovie = (JSONObject) json;
@@ -85,7 +85,7 @@ public class JsonReader {
 
     // EFFECTS: parses all/watched/unwatched movie from JSON object and adds them to movielist
     // MODIFIES: movieList
-    private void addMovie(MovieList movieList, JSONObject jsonObject, String status) {
+    public void addMovie(MovieList movieList, JSONObject jsonObject, String status) {
         String name = jsonObject.getString("name");
         String genre = jsonObject.getString("genre");
         int rating = jsonObject.getInt("rating");
