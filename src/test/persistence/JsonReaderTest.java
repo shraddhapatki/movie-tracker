@@ -1,5 +1,6 @@
 package persistence;
 
+import exceptions.ExistingMovieException;
 import model.*;
 import org.junit.jupiter.api.Test;
 
@@ -11,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class JsonReaderTest extends JsonTest {
 
     @Test
-    void testReaderNonExistentFile() {
+    void testReaderNonExistentFile() throws ExistingMovieException {
         JsonReader reader = new JsonReader("./data/nonExistentFile.json");
         try {
             MovieList movieList = reader.read();
@@ -22,7 +23,7 @@ public class JsonReaderTest extends JsonTest {
     }
 
     @Test
-    public void testEmptyMovieList() {
+    public void testEmptyMovieList() throws ExistingMovieException {
         JsonReader reader = new JsonReader("./data/testEmptyMovieList.json");
         try {
             MovieList movieList = reader.read();
@@ -33,7 +34,7 @@ public class JsonReaderTest extends JsonTest {
     }
 
     @Test
-    public void testMovieList() {
+    public void testMovieList() throws ExistingMovieException {
         JsonReader reader = new JsonReader("./data/testMovieList.json");
         try {
             MovieList movieList = reader.read();
@@ -47,7 +48,7 @@ public class JsonReaderTest extends JsonTest {
     }
 
     @Test
-    public void testWatchList() {
+    public void testWatchList() throws ExistingMovieException {
         JsonReader reader = new JsonReader("./data/testWatchedList.json");
         try {
             MovieList movieList = reader.read();

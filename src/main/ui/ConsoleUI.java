@@ -1,7 +1,5 @@
 package ui;
 
-import model.Movie;
-
 import java.io.FileNotFoundException;
 
 public class ConsoleUI {

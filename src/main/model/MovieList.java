@@ -1,5 +1,6 @@
 package model;
 
+import exceptions.ExistingMovieException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import persistence.Writable;
@@ -29,18 +30,31 @@ public class MovieList implements Writable {
     }
 
     // EFFECTS: adds movie to all movies list
-    public void addAll(Movie movie) {
-        allMovies.add(movie);
+    //          throws ExistingMovieException if movie with same name already exists in all movies
+    public void addAll(Movie movie) throws ExistingMovieException {
+        if (allMovies.contains(movie)) {
+            throw new ExistingMovieException("Movie already exists!");
+        } else {
+            allMovies.add(movie);
+        }
     }
 
     // EFFECTS: adds movie to unwatched movies list
-    public void addUnwatched(Movie movie) {
-        unwatchedMovies.add(movie);
+    public void addUnwatched(Movie movie) throws ExistingMovieException {
+        if (unwatchedMovies.contains(movie)) {
+            throw new ExistingMovieException("Movie already exists!");
+        } else {
+            unwatchedMovies.add(movie);
+        }
     }
 
     // EFFECTS: adds movie to watched movies list
-    public void addWatched(Movie movie) {
-        watchedMovies.add(movie);
+    public void addWatched(Movie movie) throws ExistingMovieException {
+        if (watchedMovies.contains(movie)) {
+            throw new ExistingMovieException("Movie already exists!");
+        } else {
+            watchedMovies.add(movie);
+        }
     }
 
     // EFFECTS: Removes movie from all movies list and unwatched or watched movies list using movie name

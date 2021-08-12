@@ -1,5 +1,6 @@
 package ui;
 
+import exceptions.ExistingMovieException;
 import model.Movie;
 import model.MovieList;
 import persistence.*;
@@ -11,8 +12,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
 
 
 // Citation: Used the following resources for information on Swing
@@ -37,31 +36,29 @@ import java.util.List;
 
 public class GUI extends JFrame {
 
-    private List<Movie> allMovies = new ArrayList<>();
-    private MovieList movieList = new MovieList("Movie List");
+    private MovieList movieList;
 
-    private JButton addButton = new JButton("Add");
-    private JButton deleteButton = new JButton("Delete");
-    private JButton saveButton = new JButton("Save");
-    private JButton loadButton = new JButton("Load");
+    private final JButton addButton = new JButton("Add");
+    private final JButton deleteButton = new JButton("Delete");
+    private final JButton saveButton = new JButton("Save");
+    private final JButton loadButton = new JButton("Load");
 
-    private JLabel nameLabel = new JLabel("Name");
-    private JLabel genreLabel = new JLabel("Genre");
-    private JLabel ratingLabel = new JLabel("Rating");
+    private final JLabel nameLabel = new JLabel("Name");
+    private final JLabel genreLabel = new JLabel("Genre");
+    private final JLabel ratingLabel = new JLabel("Rating");
 
     private JTable table = new JTable();
-
-    private JTextField nameField = new JTextField(10);
-    private JTextField genreField = new JTextField(10);
-    private JTextField ratingField = new JTextField(10);
-
     private DefaultTableModel tableModel = new DefaultTableModel();
+
+    private final JTextField nameField = new JTextField(10);
+    private final JTextField genreField = new JTextField(10);
+    private final JTextField ratingField = new JTextField(10);
 
     private File sound = new File("./data/sound.wav");
     private static final String JSON_STORE = "./data/movielist.json";
 
-    private JsonWriter jsonWriter = new JsonWriter(JSON_STORE);
-    private JsonReader jsonReader = new JsonReader(JSON_STORE);
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
 
     Object[] row = new Object[3];
 
@@ -71,6 +68,9 @@ public class GUI extends JFrame {
         setSize(600, 400);
         centreOnScreen();
         setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
+        movieList = new MovieList("Movie List");
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
         makeTable();
         setPanels();
         buttonPanel();
@@ -132,67 +132,72 @@ public class GUI extends JFrame {
 
     // EFFECTS: Adds a movie to the table
     public void addButtonAction() {
-        addButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                Movie movie = new Movie(nameField.getText(), genreField.getText(),
-                        Integer.parseInt(ratingField.getText()));
-                allMovies.add(movie);
-                row[0] = nameField.getText();
-                row[1] = genreField.getText();
-                row[2] = Integer.parseInt(ratingField.getText());
-                tableModel.addRow(row);
-                try {
-                    Clip clip = AudioSystem.getClip();
-                    AudioInputStream inputStream = AudioSystem.getAudioInputStream(sound);
-                    clip.open(inputStream);
-                    clip.start();
-                } catch (Exception exception) {
-                    System.err.println(exception.getMessage());
-                }
+        addButton.addActionListener(e -> {
+            Movie movie = new Movie(nameField.getText(), genreField.getText(),
+                    Integer.parseInt(ratingField.getText()));
+            try {
+                movieList.addAll(movie);
+            } catch (ExistingMovieException existingMovieException) {
+                JOptionPane.showMessageDialog(null,"Error!");
+            }
+            row[0] = nameField.getText();
+            row[1] = genreField.getText();
+            row[2] = Integer.parseInt(ratingField.getText());
+            tableModel.addRow(row);
+            try {
+                Clip clip = AudioSystem.getClip();
+                AudioInputStream inputStream = AudioSystem.getAudioInputStream(sound);
+                clip.open(inputStream);
+                clip.start();
+            } catch (Exception exception) {
+                System.err.println(exception.getMessage());
             }
         });
     }
 
     // EFFECTS: Deletes a movie from the table
     public void deleteButtonAction() {
-        deleteButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                int selectedRow = table.getSelectedRow();
-                if (selectedRow >= 0) {
-                    String movie = (table.getValueAt(table.getSelectedRow(), table.getSelectedColumn())).toString();
-                    tableModel.removeRow(selectedRow);
-                    allMovies.remove(movie);
-                }
+        deleteButton.addActionListener(e -> {
+            int selectedRow = table.getSelectedRow();
+            int selectedColumn = table.getSelectedColumn();
+            if (selectedRow >= 0) {
+                Object value = table.getModel().getValueAt(selectedRow, selectedColumn);
+                String movie = value.toString();
+                tableModel.removeRow(selectedRow);
+                movieList.removeMovie(movie);
             }
         });
     }
 
     // EFFECTS: Saves the table to file
     public void saveButtonAction() {
-        saveButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    jsonWriter = new JsonWriter(JSON_STORE);
-                    jsonWriter.open();
-                    jsonWriter.write(movieList);
-                    jsonWriter.close();
-                    JOptionPane.showMessageDialog(null, "Saved your movie list!");
-                } catch (Exception exception) {
-                    JOptionPane.showMessageDialog(null, "Error!");
-                }
+        saveButton.addActionListener(e -> {
+            try {
+                jsonWriter.open();
+                jsonWriter.write(movieList);
+                jsonWriter.close();
+                JOptionPane.showMessageDialog(null, "Saved your movie list!");
+            } catch (Exception exception) {
+                JOptionPane.showMessageDialog(null, "Error!");
             }
         });
     }
 
+
     // EFFECTS: Loads the table from file
     public void loadButtonAction() {
-        loadButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    movieList = jsonReader.read();
-                } catch (IOException ioException) {
-                    ioException.printStackTrace();
+        loadButton.addActionListener(e -> {
+            try {
+                movieList = jsonReader.read();
+                for (Movie m : movieList.getAllMovies()) {
+                    row[0] = m.getName();
+                    row[1] = m.getGenre();
+                    row[2] = m.getRating();
+                    tableModel.addRow(row);
                 }
+                JOptionPane.showMessageDialog(null, "Loaded!");
+            } catch (IOException | ExistingMovieException f) {
+                JOptionPane.showMessageDialog(null, "Error!");
             }
         });
     }

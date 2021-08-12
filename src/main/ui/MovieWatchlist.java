@@ -1,5 +1,6 @@
 package ui;
 
+import exceptions.ExistingMovieException;
 import model.*;
 import persistence.JsonReader;
 import persistence.JsonWriter;
@@ -91,8 +92,12 @@ public class MovieWatchlist {
         System.out.println("\nRating?");
         int movieRating = input.nextInt();
         Movie movie = new Movie(movieName, movieGenre, movieRating);
-        movieList.addAll(movie);
-        System.out.println("\n New movie has been added to your list");
+        try {
+            movieList.addAll(movie);
+            System.out.println("\nNew movie has been added to your list");
+        } catch (ExistingMovieException e) {
+            System.out.println("\nMovie with same name already exists!");
+        }
     }
 
     // EFFECTS: asks user for name of movie and removes from all lists
@@ -160,7 +165,7 @@ public class MovieWatchlist {
         try {
             movieList = jsonReader.read();
             System.out.println("Loaded your movie list from " + JSON_STORE);
-        } catch (IOException e) {
+        } catch (IOException | ExistingMovieException e) {
             System.out.println("Unable to load from " + JSON_STORE);
         }
     }

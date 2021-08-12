@@ -1,5 +1,9 @@
 {
-    "movies": [],
+    "movies": [{
+        "name": "a",
+        "genre": "b",
+        "rating": 8
+    }],
     "watched movies": [],
     "name": "Movie List",
     "unwatched movies": []

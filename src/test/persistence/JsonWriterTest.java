@@ -1,5 +1,6 @@
 package persistence;
 
+import exceptions.ExistingMovieException;
 import model.*;
 import org.junit.jupiter.api.Test;
 
@@ -33,7 +34,7 @@ public class JsonWriterTest extends JsonTest {
             JsonReader reader = new JsonReader("./data/testEmptyMovieList.json");
             movieList = reader.read();
             assertEquals("My Movie List", movieList.getName());
-        } catch (IOException e) {
+        } catch (IOException | ExistingMovieException e) {
             fail("Unexpected exception thrown");
         }
     }
@@ -54,7 +55,7 @@ public class JsonWriterTest extends JsonTest {
             List<Movie> movies = movieList.getAllMovies();
             checkMovie(movies.get(0), "life of pi", "adventure", 8);
             checkMovie(movies.get(1), "goodfellas", "drama", 9);
-        } catch (IOException e) {
+        } catch (IOException | ExistingMovieException e) {
             fail("Unexpected exception thrown");
         }
     }
@@ -77,7 +78,7 @@ public class JsonWriterTest extends JsonTest {
             checkMovie(watchedMovies.get(0), "life of pi","adventure", 8);
             List<Movie> unwatchedMovies = movieList.getUnwatchedMovies();
             checkMovie(unwatchedMovies.get(0), "goodfellas", "drama", 9);
-        } catch (IOException e) {
+        } catch (IOException | ExistingMovieException e) {
             fail("Unexpected exception thrown");
         }
     }

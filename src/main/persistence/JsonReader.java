@@ -1,5 +1,6 @@
 package persistence;
 
+import exceptions.ExistingMovieException;
 import model.*;
 
 import org.json.*;
@@ -27,7 +28,7 @@ public class JsonReader {
 
     // EFFECTS: reads movielist from file and returns it
     // throws IOException if an error occurs while reading data
-    public MovieList read() throws IOException {
+    public MovieList read() throws IOException, ExistingMovieException {
         String jsonData = readFile(source);
         JSONObject jsonObject = new JSONObject(jsonData);
         return parseMovieList(jsonObject);
@@ -44,7 +45,7 @@ public class JsonReader {
     }
 
     // EFFECTS: parses movielist from JSON object and returns it
-    private MovieList parseMovieList(JSONObject jsonObject) {
+    private MovieList parseMovieList(JSONObject jsonObject) throws ExistingMovieException {
         String name = jsonObject.getString("name");
         MovieList movieList = new MovieList(name);
         addMovies(movieList, jsonObject);
@@ -55,7 +56,7 @@ public class JsonReader {
 
     // EFFECTS: parses all movies list from JSON object and adds them to movielist
     // MODIFIES: movieList
-    public void addMovies(MovieList movieList, JSONObject jsonObject) {
+    public void addMovies(MovieList movieList, JSONObject jsonObject) throws ExistingMovieException {
         JSONArray jsonArray = jsonObject.getJSONArray("movies");
         for (Object json : jsonArray) {
             JSONObject nextMovie = (JSONObject) json;
@@ -65,7 +66,7 @@ public class JsonReader {
 
     // EFFECTS: parses unwatched movies list from JSON object and adds them to movielist
     // MODIFIES: movieList
-    private void addUnwatched(MovieList movieList, JSONObject jsonObject) {
+    private void addUnwatched(MovieList movieList, JSONObject jsonObject) throws ExistingMovieException {
         JSONArray jsonArray = jsonObject.getJSONArray("unwatched movies");
         for (Object json : jsonArray) {
             JSONObject nextMovie = (JSONObject) json;
@@ -75,7 +76,7 @@ public class JsonReader {
 
     // EFFECTS: parses watched movies list from JSON object and adds them to movielist
     // MODIFIES: movieList
-    private void addWatched(MovieList movieList, JSONObject jsonObject) {
+    private void addWatched(MovieList movieList, JSONObject jsonObject) throws ExistingMovieException {
         JSONArray jsonArray = jsonObject.getJSONArray("watched movies");
         for (Object json : jsonArray) {
             JSONObject nextMovie = (JSONObject) json;
@@ -85,7 +86,7 @@ public class JsonReader {
 
     // EFFECTS: parses all/watched/unwatched movie from JSON object and adds them to movielist
     // MODIFIES: movieList
-    public void addMovie(MovieList movieList, JSONObject jsonObject, String status) {
+    public void addMovie(MovieList movieList, JSONObject jsonObject, String status) throws ExistingMovieException {
         String name = jsonObject.getString("name");
         String genre = jsonObject.getString("genre");
         int rating = jsonObject.getInt("rating");
