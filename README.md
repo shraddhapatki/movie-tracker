@@ -28,3 +28,9 @@ way to organise this kind of data would be useful.
 - As a user, I want to be able to mark a movie as watched or unwatched.
 - As a user, I want to be able to save my movie list to file.
 - As a user, I want to be able to load my movie list to file.
+
+**Phase 4: Task 2**
+
+I have chosen to test and design a class in my model package to make it robust. I have made the MovieList class robust 
+by throwing a ExistingMovieException in the addAll, addWatched and addUnwatched methods. If a movie has the same name as
+an existing movie in the respective lists, it throws the exception.
