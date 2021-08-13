@@ -34,3 +34,13 @@ way to organise this kind of data would be useful.
 I have chosen to test and design a class in my model package to make it robust. I have made the MovieList class robust 
 by throwing a ExistingMovieException in the addAll, addWatched and addUnwatched methods. If a movie has the same name as
 an existing movie in the respective lists, it throws the exception.
+
+**Phase 4: Task 3**
+
+- I would split up the GUI class into different classes so that each class has one responsibility only, in line with the 
+Single Responsibility Principle.
+- For the different methods in MovieList that have duplicate code, I would reduce duplication so that it is easier to 
+change functionality of those methods together and to fix bugs.
+- I would make all my classes more robust by implementing more exceptions.
+- I would split up the MovieList class into All, Watched and Unwatched classes. These classes would extend an abstract 
+MovieList class. This would ensure that each class has a single responsibility.

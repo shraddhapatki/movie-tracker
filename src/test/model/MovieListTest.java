@@ -52,7 +52,7 @@ public class MovieListTest {
     }
 
     @Test
-    public void testDuplicateMovies() {
+    public void testExistingMovies() {
         List<Movie> testList = new ArrayList<>();
         testList.add(testMovie1);
         try {
@@ -147,6 +147,21 @@ public class MovieListTest {
     }
 
     @Test
+    public void testMarkWatched3() {
+        try {
+            testMovieList.addWatched(testMovie1);
+            testMovieList.addAll(testMovie1);
+            testMovieList.markWatchedMovie("Big Fish");
+            List<Movie> testList = new ArrayList<>();
+            testList.add(testMovie1);
+            assertEquals(testList, testMovieList.getAllMovies());
+            assertEquals(testList, testMovieList.getWatchedMovies());
+        } catch (ExistingMovieException e) {
+            fail("Unexpected exception");
+        }
+    }
+
+    @Test
     public void testMarkUnwatched() {
         try {
             testMovieList.addAll(testMovie1);
@@ -172,6 +187,21 @@ public class MovieListTest {
             testMovieList.markUnwatchedMovie("Big Fish");
             List<Movie> testList = new ArrayList<>();
             testList.add(testMovie1);
+            assertEquals(testList, testMovieList.getUnwatchedMovies());
+        } catch (ExistingMovieException e) {
+            fail("Unexpected exception");
+        }
+    }
+
+    @Test
+    public void testMarkUnwatched3() {
+        try {
+            testMovieList.addUnwatched(testMovie1);
+            testMovieList.addAll(testMovie1);
+            testMovieList.markUnwatchedMovie("Big Fish");
+            List<Movie> testList = new ArrayList<>();
+            testList.add(testMovie1);
+            assertEquals(testList, testMovieList.getAllMovies());
             assertEquals(testList, testMovieList.getUnwatchedMovies());
         } catch (ExistingMovieException e) {
             fail("Unexpected exception");
@@ -217,6 +247,32 @@ public class MovieListTest {
             assertEquals(names, testMovieList.getUnwatchedMovieNames());
         } catch (ExistingMovieException e) {
             fail("Unexpected exception");
+        }
+    }
+
+    @Test
+    public void testExistingWatched() {
+        List<Movie> testList = new ArrayList<>();
+        testList.add(testMovie1);
+        try {
+            testMovieList.addWatched(testMovie1);
+            testMovieList.addWatched(testMovie1);
+            fail("Exception thrown");
+        } catch (ExistingMovieException e) {
+            assertEquals(testList, testMovieList.getWatchedMovies());
+        }
+    }
+
+    @Test
+    public void testExistingUnwatched() {
+        List<Movie> testList = new ArrayList<>();
+        testList.add(testMovie1);
+        try {
+            testMovieList.addUnwatched(testMovie1);
+            testMovieList.addUnwatched(testMovie1);
+            fail("Exception thrown");
+        } catch (ExistingMovieException e) {
+            assertEquals(testList, testMovieList.getUnwatchedMovies());
         }
     }
 }
